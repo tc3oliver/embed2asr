@@ -110,19 +110,9 @@ embed2asr transcribe audio.wav --model /path/to/embed2asr-v1
 ```
 <!-- QUICKSTART:END -->
 
-## Hear it
+## Demo
 
-<!-- DEMO:BEGIN -->
-Three code-switching utterances (Mandarin with English words, 3-6 s) from a development set. Embed2ASR output is greedy CTC; Whisper large-v3 output is unmodified, including its punctuation and casing. The first two are cases where Embed2ASR is closer to the reference, the last is a failure.
-
-| reference | Embed2ASR | Whisper large-v3 |
-|---|---|---|
-| 有我想支持的隊伍的時候我就會very excited | 有我想支持的對伍的時候我就會very excited | 有我想支持的隊伍的時候,我就會非常興奮。 |
-| 然後再來就是smart phone它的功能有的時候 | 然後再來就是smart phone他的功能有的時候 | 然後再來就是smartphone它的功能有的時候 |
-| 你有抱過koala bear | 你有包過口阿拉伯 | 你有抱過Koala Bear嗎? |
-
-Selection: picked by hand from 121 candidate utterances of that set. On those 121, Embed2ASR has a lower MER than Whisper large-v3 on 53 and a higher one on 59 (9 ties). The pool is not a benchmark; see the benchmark table for scores.
-<!-- DEMO:END -->
+No audio demo yet. One will be added once recordings cleared for publication are available. To try the model on your own audio, see [Quick start](#quick-start).
 
 ## How it works
 
@@ -173,7 +163,7 @@ Cite this software with [CITATION.cff](CITATION.cff), and cite Google's Embeddin
 
 ## Contributing
 
-Bug reports, reproduction reports and benchmark reports are the most useful contributions. See [CONTRIBUTING.md](CONTRIBUTING.md).
+Bug reports, reproduction reports and benchmark reports are the most useful contributions. See [CONTRIBUTING.md](CONTRIBUTING.md). Speed numbers so far come from one MI300X only; results from CUDA GPUs, Apple Silicon or CPUs are welcome, see [docs/benchmark_contributing.md](docs/benchmark_contributing.md).
 
 ## License
 

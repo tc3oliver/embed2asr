@@ -6,7 +6,7 @@ Thanks for your interest. Embed2ASR is a small research project; the most useful
 
 - Bug: use the *Bug report* template. Include the exact command, environment (OS, Python, PyTorch, GPU / ROCm or CUDA version) and the full error.
 - Reproduction: use the *Reproduction report* template if you re-ran data preparation, training or evaluation and your numbers differ from ours (or match them).
-- Benchmark: use the *Benchmark report* template. State the dataset, split, metric (CER / WER / MER), decoding mode (greedy or LM), hardware and version. Do not combine CER, WER and MER into one number.
+- Benchmark: use the *Benchmark report* template. State the dataset, split, metric (CER / WER / MER), decoding mode (greedy or LM), hardware and version. Do not combine CER, WER and MER into one number. For speed and memory on your hardware, follow [docs/benchmark_contributing.md](docs/benchmark_contributing.md).
 
 ## Pull requests
 

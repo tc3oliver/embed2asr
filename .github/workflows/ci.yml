@@ -29,6 +29,12 @@ jobs:
         run: |
           ruff check .
           ruff format --check .
+      - name: docs match benchmark JSON (README, benchmarks.md, performance.svg, model card)
+        run: |
+          python scripts/fill_bench.py
+          python scripts/fill_perf.py --check
+          python scripts/make_model_card.py --check
+          git diff --exit-code
       - name: pytest (default markers; slow tests need the real encoder)
         run: pytest -q
       - name: training smoke (synthetic features, CPU; no checkpoint, GPU or token)

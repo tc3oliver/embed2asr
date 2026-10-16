@@ -61,7 +61,7 @@ Code: https://github.com/tc3oliver/embed2asr · Benchmark protocol: [docs/benchm
 
 ## Architecture
 
-<p align="center"><img src="assets/overview.svg" alt="Audio goes into the frozen EmbeddingGemma 2 audio encoder. Its pre-pooling last_hidden_state (1536-d, 25 frames per second) is fed to a trainable 9,655,172-parameter GRU-CTC reader that outputs the transcript." width="880"></p>
+<p align="center"><img src="https://huggingface.co/tc3oliver/Embed2ASR-v1/resolve/main/assets/overview.svg" alt="Audio goes into the frozen EmbeddingGemma 2 audio encoder. Its pre-pooling last_hidden_state (1536-d, 25 frames per second) is fed to a trainable 9,655,172-parameter GRU-CTC reader that outputs the transcript." width="880"></p>
 
 ```
 16 kHz audio -> EmbeddingGemma 2 audio tower (frozen, bf16 on GPU) -> last_hidden_state, 25 frames/s x 1536
@@ -90,7 +90,7 @@ Encoder: `google/embeddinggemma-2` revision `914f7f89142e33e77833254d9c9b90c3cef
 
 **4.16× faster inference and 76.5% lower peak GPU memory than Whisper large-v3 at batch 1, measured on the same MI300X and the same clips.**
 
-<p align="center"><img src="assets/performance.svg" alt="Bar charts: Embed2ASR-v1 vs Whisper large-v3 on one MI300X. Real-time factor at batch 1 and batch 16, peak GPU memory, lower is better." width="640"></p>
+<p align="center"><img src="https://huggingface.co/tc3oliver/Embed2ASR-v1/resolve/main/assets/performance.svg" alt="Bar charts: Embed2ASR-v1 vs Whisper large-v3 on one MI300X. Real-time factor at batch 1 and batch 16, peak GPU memory, lower is better." width="640"></p>
 
 |  | Embed2ASR-v1 | Whisper large-v3 | Difference |
 | --- | --- | --- | --- |

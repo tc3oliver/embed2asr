@@ -110,19 +110,9 @@ embed2asr transcribe audio.wav --model /path/to/embed2asr-v1
 ```
 <!-- QUICKSTART:END -->
 
-## 試聽
+## Demo
 
-<!-- DEMO:BEGIN -->
-三句中英夾雜的語句（華語夾英文單字，3–6 秒），來自開發集。Embed2ASR 為 greedy CTC 輸出；Whisper large-v3 為原始輸出，含它自己的標點與大小寫。前兩句 Embed2ASR 較接近參考答案，最後一句是失敗例。
-
-| reference | Embed2ASR | Whisper large-v3 |
-|---|---|---|
-| 有我想支持的隊伍的時候我就會very excited | 有我想支持的對伍的時候我就會very excited | 有我想支持的隊伍的時候,我就會非常興奮。 |
-| 然後再來就是smart phone它的功能有的時候 | 然後再來就是smart phone他的功能有的時候 | 然後再來就是smartphone它的功能有的時候 |
-| 你有抱過koala bear | 你有包過口阿拉伯 | 你有抱過Koala Bear嗎? |
-
-挑選方式：從該集的 121 句候選中手選。這 121 句裡，Embed2ASR 的 MER 低於 Whisper large-v3 的有 53 句、高於的有 59 句、持平 9 句。這個候選池不是 benchmark，分數請看 benchmark 表。
-<!-- DEMO:END -->
+目前沒有音訊 Demo，等有可公開的錄音後再補上。想用自己的音訊試，請看[快速開始](#快速開始)。
 
 ## 運作方式
 
@@ -173,7 +163,7 @@ Embed2ASR-v1 artifacts（reader 權重、tokenizer、unit 清單、可選的 5-g
 
 ## 參與貢獻
 
-最有幫助的是 bug 回報、重現回報與 benchmark 回報。見 [CONTRIBUTING.md](CONTRIBUTING.md)。
+最有幫助的是 bug 回報、重現回報與 benchmark 回報。見 [CONTRIBUTING.md](CONTRIBUTING.md)。目前的速度數字只來自一張 MI300X；歡迎回報 CUDA GPU、Apple Silicon 或 CPU 上的結果，做法見 [docs/benchmark_contributing.md](docs/benchmark_contributing.md)。
 
 ## 授權
 
