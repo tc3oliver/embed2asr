@@ -8,7 +8,7 @@
   <rect width="1280" height="640" fill="#0d1117"/>
   <rect x="0" y="0" width="12" height="640" fill="#3fb950"/>
   <text x="80" y="170" font-size="96" font-weight="700" fill="#e6edf3">Embed2ASR</text>
-  <text x="80" y="236" font-size="40" fill="#9da7b3">Embedding model to speech recognition</text>
+  <text x="80" y="236" font-size="40" fill="#9da7b3">Turning audio embeddings into speech recognition</text>
 
   <rect x="80" y="320" width="300" height="150" rx="16" fill="#0c2d6b" stroke="#58a6ff" stroke-width="3"/>
   <text x="230" y="378" text-anchor="middle" font-size="26" font-weight="600" fill="#e6edf3">EmbeddingGemma 2</text>
@@ -30,5 +30,5 @@
   <text x="1030" y="378" text-anchor="middle" font-size="28" font-weight="600" fill="#e6edf3">Transcript</text>
   <text x="1030" y="414" text-anchor="middle" font-size="22" fill="#9da7b3">zh-TW · English · mixed</text>
 
-  <text x="80" y="570" font-size="26" fill="#9da7b3">Frozen encoder, small CTC reader. Mandarin, English, code-switching.</text>
+  <text x="80" y="570" font-size="26" fill="#9da7b3">Frozen encoder, 9.66M trainable reader, no encoder fine-tuning.</text>
 </svg>

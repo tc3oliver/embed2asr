@@ -1,10 +1,8 @@
-# Embed2ASR
+# Embed2ASR — 把音訊 Embedding 變成語音辨識
 
-**Embedding 模型能變成語音辨識模型嗎？**
+**凍結的 embedding encoder，加上 9.66M 可訓練的 reader，不微調 encoder 就能轉寫語音。**
 
-我們凍結 Google EmbeddingGemma 2 的音訊 encoder，只訓練一個輕量的 GRU-CTC reader，把時間序列 embedding 轉成語音逐字稿。
-
-[English](README.md) · [繁體中文](README.zh-TW.md)
+[English](README.md) · [繁體中文](README.zh-TW.md) · [快速開始](#快速開始) · [Benchmark](docs/benchmarks.md) · [Hugging Face 模型](https://huggingface.co/tc3oliver/Embed2ASR-v1)
 
 ![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue)
 ![License: Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-blue)
@@ -12,13 +10,17 @@
 [![Release](https://img.shields.io/github/v/release/tc3oliver/embed2asr)](https://github.com/tc3oliver/embed2asr/releases)
 [![Hugging Face](https://img.shields.io/badge/%F0%9F%A4%97-Embed2ASR--v1-yellow)](https://huggingface.co/tc3oliver/Embed2ASR-v1)
 
-<!-- PERF:HERO:BEGIN -->
-**最高比 Whisper large-v3 快 4.2 倍（batch 1，本測試環境）；GPU 峰值記憶體低 76% 以上。**
-<!-- PERF:HERO:END -->
+我們把一個音訊 embedding 模型改用於語音辨識，而且不微調它的 encoder。Embed2ASR 取 Google EmbeddingGemma 2 audio encoder 在 pooling 之前的 `last_hidden_state`（1536 維、每秒 25 個 frame；不是最後的 pooled embedding 向量），交給 9,655,172 參數的 GRU-CTC reader 解碼。
 
-凍結的 EmbeddingGemma 2 音訊 encoder + 9.66M 參數的 GRU-CTC reader。
+<p align="center"><img src="assets/overview.svg" alt="音訊進入凍結的 EmbeddingGemma 2 audio encoder，pooling 之前的 last_hidden_state（1536 維、每秒 25 frame）交給可訓練的 9,655,172 參數 GRU-CTC reader，輸出逐字稿。原本的 embed_audio 與 pooling 路徑不使用。" width="880"></p>
+
+**為什麼重要。** 預訓練的 embedding 表徵，能不能重用在它原本沒被設計去做的任務上？這個專案針對音訊 embedding 與語音辨識（中文、英文、中英混用）給出一個有實測的答案。
 
 ## 效能一覽
+
+<!-- PERF:HERO:BEGIN -->
+**batch 1 下，推論速度比 Whisper large-v3 快 4.16 倍、GPU 峰值記憶體低 76.5%，同一張 MI300X、同一批音訊實測。**
+<!-- PERF:HERO:END -->
 
 <p align="center"><img src="assets/performance.svg" alt="長條圖：Embed2ASR-v1 與 Whisper large-v3 在單張 MI300X 上的 RTF（batch 1 與 batch 16）與 GPU 峰值記憶體，越低越好。" width="640"></p>
 
@@ -33,14 +35,14 @@
 <!-- PERF:TABLE:END -->
 
 <!-- PERF:COND:BEGIN -->
-測試條件：單張 MI300X，測前閒置；ROCm 7.1、torch 2.10；兩者都用 bf16。200 段音訊（中文 100 + 英文 100），共 1,086 秒。計時包含音檔解碼、特徵、模型與文字輸出，不含模型載入；暖機 1 次後取 3 輪中位數。Whisper 使用 Hugging Face `generate`，greedy（`num_beams=1`）。Embed2ASR 在 batch 16 使用 `cross_file=True`（不同檔案的片段混批；約 4% 的短句可能差 1 個單位；預設關閉）。記憶體是 torch 的 peak allocated，含完整 audio encoder 與 reader，不是整個 process 的用量。冷啟動是從程序啟動到第一個輸出。「最高」只代表這兩個 batch size 與這組硬體。轉寫結果在不同 transformers 版本與 GPU 型號之間可能有 ±1 個單位的差異（同一環境內結果一致）；本次 benchmark 環境為 torch 2.10.0+rocm7.1.1、transformers 5.19.0、MI300X。
+測試條件：單張 MI300X，測前閒置；ROCm 7.1、torch 2.10；兩者都用 bf16。200 段音訊（中文 100 + 英文 100），共 1,086 秒。計時包含音檔解碼、特徵、模型與文字輸出，不含模型載入；暖機 1 次後取 3 輪中位數。Whisper 使用 Hugging Face `generate`，greedy（`num_beams=1`）。Embed2ASR 在 batch 16 使用 `cross_file=True`（不同檔案的片段混批；約 4% 的短句可能差 1 個單位；預設關閉）。記憶體是 torch 的 peak allocated，含完整 audio encoder 與 reader，不是整個 process 的用量。冷啟動是從程序啟動到第一個輸出。數字只適用於這兩個 batch size 與這組硬體。轉寫結果在不同 transformers 版本與 GPU 型號之間可能有 ±1 個單位的差異（同一環境內結果一致）；本次 benchmark 環境為 torch 2.10.0+rocm7.1.1、transformers 5.19.0、MI300X。
 <!-- PERF:COND:END -->
+
+這是兩個不同系統的比較。差距來自幾個我們沒有做消融的因素（載入的模型大小、CTC 與自回歸解碼的差別、本測試環境），請把它當成這條 pipeline 的實測結果，不要解讀成 embedding 模型本身的特性。多數測試集的準確度低於 Whisper large-v3，見[準確度](#準確度對照-whisper-large-v3)。
 
 完整測試協定與更多數字：[docs/benchmarks.md](docs/benchmarks.md)。
 
 ## 架構
-
-<p align="center"><img src="assets/overview.svg" alt="音訊進入凍結的 EmbeddingGemma 2 音訊 encoder，在 embed_audio 與 pooling 之前取出 last_hidden_state（1536 維、每秒 25 幀），交給可訓練的 9,655,172 參數 GRU-CTC reader 輸出逐字稿。原本的 embedding 路徑沒有使用。" width="880"></p>
 
 Encoder 完全不更新，只訓練 9,655,172 個參數的 reader。推論時載入約 314.5M 參數。
 

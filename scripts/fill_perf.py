@@ -6,7 +6,6 @@ Regions are delimited by <!-- PERF:<NAME>:BEGIN --> / <!-- PERF:<NAME>:END -->. 
 unrounded JSON values (same `derive` as make_perf_svg.py). --check fails if any region or assets/performance.svg is stale."""
 
 import json
-import math
 import re
 import subprocess
 import sys
@@ -17,7 +16,7 @@ from make_perf_svg import JSON, ROOT, derive, rtf  # noqa: E402
 
 T = {
     "en": {
-        "hero": "**Up to {sp:.1f}× faster than Whisper large-v3 (batch 1, our setup); over {mem}% lower peak GPU memory.**",
+        "hero": "**{sp:.2f}× faster inference and {mem:.1f}% lower peak GPU memory than Whisper large-v3 at batch 1, measured on the same MI300X and the same clips.**",
         "head": ["", "Embed2ASR-v1", "Whisper large-v3", "Difference"],
         "rtf": "RTF, batch {n} (lower is better)",
         "mem": "Peak GPU memory, batch {n}",
@@ -30,7 +29,7 @@ T = {
             "Whisper uses Hugging Face `generate`, greedy (`num_beams=1`). Embed2ASR at batch 16 uses `cross_file=True` "
             "(chunks of different files are batched together; about 4% of short clips can change by one unit; off by default). "
             "Memory is torch peak allocated, including the full audio encoder and the reader, not whole-process memory. "
-            'Cold start is process start to first output. "Up to" refers to these two batch sizes on this hardware only. '
+            "Cold start is process start to first output. The figures apply to these two batch sizes on this hardware only. "
             "Transcripts can differ by +-1 unit across transformers versions and GPU models (identical within one environment); "
             "this benchmark ran on torch 2.10.0+rocm7.1.1, transformers 5.19.0, MI300X."
         ),
@@ -43,7 +42,7 @@ T = {
         "u16": "per batch of 16",
     },
     "zh": {
-        "hero": "**最高比 Whisper large-v3 快 {sp:.1f} 倍（batch 1，本測試環境）；GPU 峰值記憶體低 {mem}% 以上。**",
+        "hero": "**batch 1 下，推論速度比 Whisper large-v3 快 {sp:.2f} 倍、GPU 峰值記憶體低 {mem:.1f}%，同一張 MI300X、同一批音訊實測。**",
         "head": ["", "Embed2ASR-v1", "Whisper large-v3", "差異"],
         "rtf": "RTF，batch {n}（越低越好）",
         "mem": "GPU 峰值記憶體，batch {n}",
@@ -56,7 +55,7 @@ T = {
             "Whisper 使用 Hugging Face `generate`，greedy（`num_beams=1`）。Embed2ASR 在 batch 16 使用 `cross_file=True`"
             "（不同檔案的片段混批；約 4% 的短句可能差 1 個單位；預設關閉）。"
             "記憶體是 torch 的 peak allocated，含完整 audio encoder 與 reader，不是整個 process 的用量。"
-            "冷啟動是從程序啟動到第一個輸出。「最高」只代表這兩個 batch size 與這組硬體。"
+            "冷啟動是從程序啟動到第一個輸出。數字只適用於這兩個 batch size 與這組硬體。"
             "轉寫結果在不同 transformers 版本與 GPU 型號之間可能有 ±1 個單位的差異（同一環境內結果一致）；"
             "本次 benchmark 環境為 torch 2.10.0+rocm7.1.1、transformers 5.19.0、MI300X。"
         ),
@@ -106,7 +105,7 @@ def regions(d: dict, lang: str) -> dict:
         det.append(row([t["d_res"].format(n=n), *(f"{x[bs]['peak_reserved_gib']:.2f} GiB" for x in (e, w))]))
         det.append(row([t["d_pass"].format(n=n), *(", ".join(rtf(p) for p in x[bs]["rtf_passes"]) for x in (e, w))]))
     return {
-        "HERO": t["hero"].format(sp=v["speedup_bs1"], mem=math.floor(v["mem_cut_bs1"] * 100)),
+        "HERO": t["hero"].format(sp=v["speedup_bs1"], mem=v["mem_cut_bs1"] * 100),
         "TABLE": "\n".join(tab),
         "COND": t["cond"].format(n=c["clips"], m=t["clips"], a=c["audio_seconds"]),
         "DETAIL": "\n".join(det),

@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="880" height="440" viewBox="0 0 880 440" role="img" aria-labelledby="t d">
   <title id="t">Embed2ASR overview</title>
-  <desc id="d">16 kHz audio goes into the frozen EmbeddingGemma 2 audio encoder (304,824,608 parameters). Embed2ASR taps last_hidden_state, a sequence of 1536-dimensional frames at 25 frames per second, before embed_audio and pooling. A trainable GRU-CTC reader (9,655,172 parameters) turns the frames into a transcript. The original embed_audio and pooling path is drawn dashed and grey and is not used. About 314.5M parameters are loaded for inference.</desc>
+  <desc id="d">16 kHz audio goes into the frozen EmbeddingGemma 2 audio encoder (304,824,608 parameters). Embed2ASR taps last_hidden_state, a sequence of 1536-dimensional frames at 25 frames per second, pre-pooling, not the pooled vector. A trainable GRU-CTC reader (9,655,172 parameters) turns the frames into a transcript. The original embed_audio and pooling path is drawn dashed and grey and is not used. About 314.5M parameters are loaded for inference.</desc>
   <defs>
     <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" class="ar"/></marker>
     <marker id="ag" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" class="arg"/></marker>
@@ -56,7 +56,7 @@
     }
   </style>
   <rect x="1" y="1" width="878" height="438" rx="16" class="card" stroke-width="2"/>
-  <text x="24" y="36" text-anchor="start" font-size="20" font-weight="700" class="t">Frozen embedding encoder + small CTC reader</text>
+  <text x="24" y="36" text-anchor="start" font-size="20" font-weight="700" class="t">From embedding model to speech recognition, encoder never fine-tuned</text>
   <rect x="24" y="60" width="100" height="110" rx="12" class="box" stroke-width="2"/>
   <text x="74" y="108" text-anchor="middle" font-size="18" font-weight="600" class="t">Audio</text>
   <text x="74" y="132" text-anchor="middle" font-size="15" class="s">16 kHz</text>
@@ -73,7 +73,7 @@
   <line x1="419" y1="124" x2="419" y2="276" class="tapl" stroke-width="2" stroke-dasharray="4 4"/>
   <text x="405" y="232" text-anchor="end" font-size="14" font-weight="600" class="tapt">tap: last_hidden_state</text>
   <text x="405" y="252" text-anchor="end" font-size="14" class="tapt">[T × 1536], 25 frames/s</text>
-  <text x="405" y="272" text-anchor="end" font-size="14" class="tapt">before embed_audio and pooling</text>
+  <text x="405" y="272" text-anchor="end" font-size="14" class="tapt">pre-pooling, not the pooled vector</text>
   <rect x="436" y="60" width="250" height="110" rx="12" class="trn" stroke-width="2.5"/>
   <text x="561" y="90" text-anchor="middle" font-size="18" font-weight="600" class="t">GRU-CTC reader</text>
   <text x="561" y="112" text-anchor="middle" font-size="14" class="s">Conv1d + BiGRU</text>

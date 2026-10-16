@@ -1,10 +1,8 @@
-# Embed2ASR
+# Embed2ASR — Turning Audio Embeddings into Speech Recognition
 
-**Can an Embedding Model Become a Speech Recognition Model?**
+**A frozen embedding encoder. A 9.66M trainable reader. Speech transcription without encoder fine-tuning.**
 
-We froze Google's EmbeddingGemma 2 audio encoder and trained a lightweight GRU-CTC reader to turn temporal embeddings into speech transcripts.
-
-[English](README.md) · [繁體中文](README.zh-TW.md)
+[English](README.md) · [繁體中文](README.zh-TW.md) · [Quick start](#quick-start) · [Benchmarks](docs/benchmarks.md) · [Model on Hugging Face](https://huggingface.co/tc3oliver/Embed2ASR-v1)
 
 ![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue)
 ![License: Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-blue)
@@ -12,13 +10,17 @@ We froze Google's EmbeddingGemma 2 audio encoder and trained a lightweight GRU-C
 [![Release](https://img.shields.io/github/v/release/tc3oliver/embed2asr)](https://github.com/tc3oliver/embed2asr/releases)
 [![Hugging Face](https://img.shields.io/badge/%F0%9F%A4%97-Embed2ASR--v1-yellow)](https://huggingface.co/tc3oliver/Embed2ASR-v1)
 
-<!-- PERF:HERO:BEGIN -->
-**Up to 4.2× faster than Whisper large-v3 (batch 1, our setup); over 76% lower peak GPU memory.**
-<!-- PERF:HERO:END -->
+We repurposed an audio embedding model for speech recognition without fine-tuning its encoder. Embed2ASR takes the pre-pooling `last_hidden_state` of Google's EmbeddingGemma 2 audio encoder (1536-d frames, 25 per second; not the final pooled embedding vector) and decodes it with a 9,655,172-parameter GRU-CTC reader.
 
-Frozen EmbeddingGemma 2 audio encoder + 9.66M-parameter GRU-CTC reader.
+<p align="center"><img src="assets/overview.svg" alt="Audio goes into the frozen EmbeddingGemma 2 audio encoder. Its pre-pooling last_hidden_state (1536-d, 25 frames per second) is fed to a trainable 9,655,172-parameter GRU-CTC reader that outputs the transcript. The original embed_audio and pooling path is not used." width="880"></p>
+
+**Why it matters.** Can pretrained embedding representations be reused for tasks they weren't originally designed to perform? This project is one measured answer for audio embeddings and speech recognition (Mandarin, English and code-switching).
 
 ## Performance at a glance
+
+<!-- PERF:HERO:BEGIN -->
+**4.16× faster inference and 76.5% lower peak GPU memory than Whisper large-v3 at batch 1, measured on the same MI300X and the same clips.**
+<!-- PERF:HERO:END -->
 
 <p align="center"><img src="assets/performance.svg" alt="Bar charts: Embed2ASR-v1 vs Whisper large-v3 on one MI300X. Real-time factor at batch 1 and batch 16, peak GPU memory, lower is better." width="640"></p>
 
@@ -33,14 +35,14 @@ Frozen EmbeddingGemma 2 audio encoder + 9.66M-parameter GRU-CTC reader.
 <!-- PERF:TABLE:END -->
 
 <!-- PERF:COND:BEGIN -->
-Setup: one MI300X, idle before the run; ROCm 7.1, torch 2.10; bf16 for both systems. 200 clips (100 Mandarin + 100 English), 1,086 s of audio. Timing covers audio decode, features, model and text, not model loading; median of 3 passes after 1 warm-up. Whisper uses Hugging Face `generate`, greedy (`num_beams=1`). Embed2ASR at batch 16 uses `cross_file=True` (chunks of different files are batched together; about 4% of short clips can change by one unit; off by default). Memory is torch peak allocated, including the full audio encoder and the reader, not whole-process memory. Cold start is process start to first output. "Up to" refers to these two batch sizes on this hardware only. Transcripts can differ by +-1 unit across transformers versions and GPU models (identical within one environment); this benchmark ran on torch 2.10.0+rocm7.1.1, transformers 5.19.0, MI300X.
+Setup: one MI300X, idle before the run; ROCm 7.1, torch 2.10; bf16 for both systems. 200 clips (100 Mandarin + 100 English), 1,086 s of audio. Timing covers audio decode, features, model and text, not model loading; median of 3 passes after 1 warm-up. Whisper uses Hugging Face `generate`, greedy (`num_beams=1`). Embed2ASR at batch 16 uses `cross_file=True` (chunks of different files are batched together; about 4% of short clips can change by one unit; off by default). Memory is torch peak allocated, including the full audio encoder and the reader, not whole-process memory. Cold start is process start to first output. The figures apply to these two batch sizes on this hardware only. Transcripts can differ by +-1 unit across transformers versions and GPU models (identical within one environment); this benchmark ran on torch 2.10.0+rocm7.1.1, transformers 5.19.0, MI300X.
 <!-- PERF:COND:END -->
+
+This compares two different systems. The gap comes from several things we did not ablate (loaded model size, CTC versus autoregressive decoding, this test setup), so read it as a measurement of this pipeline, not as a property of embedding models. Accuracy is lower than Whisper large-v3 on most test sets: see [Accuracy](#accuracy-vs-whisper-large-v3).
 
 Full protocol and extra numbers: [docs/benchmarks.md](docs/benchmarks.md).
 
 ## Architecture
-
-<p align="center"><img src="assets/overview.svg" alt="Audio goes into the frozen EmbeddingGemma 2 audio encoder. Its last_hidden_state (1536-d, 25 frames per second) is tapped before embed_audio and pooling and fed to a trainable 9,655,172-parameter GRU-CTC reader that outputs a transcript. The original embedding path is unused." width="880"></p>
 
 The encoder is never updated. Only the 9,655,172-parameter reader is trained. About 314.5M parameters are loaded for inference.
 
