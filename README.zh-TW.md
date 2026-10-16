@@ -155,7 +155,7 @@ Embedding 模型會把 encoder 狀態 pooling 成一個向量，時間軸因此�
 
 ## Model card 與權重
 
-Embed2ASR-v1 artifacts（reader 權重、tokenizer、unit 清單、可選的 5-gram LM）以 Apache-2.0 釋出。Model card：[docs/model_card_draft.md](docs/model_card_draft.md)。下載連結會在發布時加入。EmbeddingGemma 2 encoder 不包含在內。
+Embed2ASR-v1 artifacts（reader 權重、tokenizer、unit 清單、可選的 5-gram LM）以 Apache-2.0 釋出。Model card：[docs/model_card.md](docs/model_card.md)。權重：[tc3oliver/Embed2ASR-v1](https://huggingface.co/tc3oliver/Embed2ASR-v1)。EmbeddingGemma 2 encoder 不包含在內。
 
 ## 引用
 

@@ -155,7 +155,7 @@ Training and evaluation: [docs/reproducibility.md](docs/reproducibility.md).
 
 ## Model card and weights
 
-Embed2ASR-v1 artifacts (reader weights, tokenizer, unit list, optional 5-gram LM) are released under Apache-2.0. Model card: [docs/model_card_draft.md](docs/model_card_draft.md). Download links are added at release time. The EmbeddingGemma 2 encoder is not included.
+Embed2ASR-v1 artifacts (reader weights, tokenizer, unit list, optional 5-gram LM) are released under Apache-2.0. Model card: [docs/model_card.md](docs/model_card.md). Weights: [tc3oliver/Embed2ASR-v1](https://huggingface.co/tc3oliver/Embed2ASR-v1). The EmbeddingGemma 2 encoder is not included.
 
 ## Citation
 
