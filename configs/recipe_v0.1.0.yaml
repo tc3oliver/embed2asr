@@ -1,0 +1,44 @@
+# Hyperparameters of the v0.1.0 reader recipe; data paths are placeholders.
+#
+#   export E2A_CACHE=/path/to/caches     # feature caches from training/prepare_features.py (index.jsonl + features.bin)
+#   export E2A_CKPT=/path/to/output
+#   python -m training.train --config configs/recipe_v0.1.0.yaml
+# The trainer refuses to start if E2A_CACHE / E2A_CKPT are unset. See docs/training.md.
+
+train: ["${E2A_CACHE}/train/index.jsonl"]
+train_hours: 100                          # distinct rows per epoch (rotating pool); set it to what your data supports
+pool_chunks: 8                            # upload each epoch's rows in 8 random parts (bounds GPU feature memory)
+dev: ["${E2A_CACHE}/dev/index.jsonl"]
+
+# ---- model / vocabulary ----
+vocab_mode: bpe                           # every CJK char is a unit + SentencePiece BPE(400) for ASCII runs
+bpe_size: 400
+d: 512
+gru: 256
+blocks: 3
+dropout: 0.0
+
+# ---- optimization ----
+epochs: 80
+batch_size: 32                            # utterances per step (single GPU, no accumulation)
+lr: 5.0e-4                                # AdamW wd 0.01; warmup min(500, total/10) steps, cosine to 5% of lr; grad clip 5
+time_mask: 0.1
+bf16: false                               # fp32 compute on bf16-stored features
+seed: 42
+
+# ---- evaluation / selection / stopping ----
+eval_every: 2
+select:                                   # combined score = mean(metric / base)
+  dev_cer: 1.0
+select_tol: 0.05
+patience: 8
+min_epochs: 20
+min_delta: 0.003
+max_hours: 14
+regress_guard: 1.10
+regress_evals: 4
+regress_ref: best
+regress_from: 20
+
+out: "${E2A_CKPT}/reader"
+resume: auto

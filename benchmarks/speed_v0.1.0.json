@@ -1,0 +1,104 @@
+{
+ "version": "v0.1.0",
+ "conditions": {
+  "device": "AMD Instinct MI300X (1 GPU; idle before the run, not monitored during it)",
+  "software": "ROCm 7.1, torch 2.10.0+rocm7.1.1, transformers 5.19.0",
+  "precision": "bf16 (both systems)",
+  "clips": 200,
+  "audio_seconds": 1085.6,
+  "clip_mix": "100 Mandarin (Common Voice zh-TW) + 100 English (LibriSpeech)",
+  "timing": "audio file decode, features, model, text; model loading excluded",
+  "protocol": "1 warm-up pass, then 3 timed passes; reported value is the median pass",
+  "whisper": "Hugging Face generate, greedy (num_beams=1); Mandarin clips use a Traditional Chinese prompt",
+  "embed2asr_batching": "batch 1: default; batch 16: cross_file=True (chunks of different files batched together; about 4% of short clips can change by one unit; off by default)",
+  "memory": "torch.cuda.max_memory_allocated, includes the full audio encoder and the reader; not whole-process memory",
+  "cold_start": "process start to first output: imports, model load, first inference; median of 3 runs",
+  "latency": "batch 1: per clip (600 = 200 clips x 3 passes); batch 16: per batch (42 batches)"
+ },
+ "results": {
+  "embed2asr": {
+   "bs1": {
+    "rtf": 0.01384661819896059,
+    "rtf_passes": [
+     0.014067329278175994,
+     0.013692683471652435,
+     0.01384661819896059
+    ],
+    "latency_s": {
+     "p50": 0.06263976101763546,
+     "p95": 0.14107387396506965,
+     "mean": 0.07527692339848727,
+     "n": 600
+    },
+    "peak_alloc_gib": 0.7507963180541992,
+    "peak_reserved_gib": 0.83203125
+   },
+   "bs16": {
+    "rtf": 0.003453036997659528,
+    "rtf_passes": [
+     0.0036359515300969348,
+     0.0034296450262087264,
+     0.003453036997659528
+    ],
+    "latency_s": {
+     "p50": 0.251479406026192,
+     "p95": 0.3987096179043874,
+     "mean": 0.2718737036394443,
+     "n": 42
+    },
+    "peak_alloc_gib": 1.7444243431091309,
+    "peak_reserved_gib": 3.462890625
+   },
+   "cold_start_s": {
+    "runs": [
+     7.728382110595703,
+     8.204691171646118,
+     7.891795635223389
+    ],
+    "median": 7.891795635223389
+   }
+  },
+  "whisper_large_v3": {
+   "bs1": {
+    "rtf": 0.05763351886701328,
+    "rtf_passes": [
+     0.056955025577860495,
+     0.0584380837108626,
+     0.05763351886701328
+    ],
+    "latency_s": {
+     "p50": 0.2393676299834624,
+     "p95": 0.7533576550194994,
+     "mean": 0.31305380291848756,
+     "n": 600
+    },
+    "peak_alloc_gib": 3.198554039001465,
+    "peak_reserved_gib": 3.4765625
+   },
+   "bs16": {
+    "rtf": 0.01055662417876606,
+    "rtf_passes": [
+     0.01055662417876606,
+     0.010306802659602453,
+     0.010879299972772368
+    ],
+    "latency_s": {
+     "p50": 0.7135901260189712,
+     "p95": 1.2618831279687583,
+     "mean": 0.820453218608496,
+     "n": 42
+    },
+    "peak_alloc_gib": 6.881474018096924,
+    "peak_reserved_gib": 8.0859375
+   },
+   "cold_start_s": {
+    "runs": [
+     6.188230991363525,
+     6.023680925369263,
+     5.877983808517456
+    ],
+    "median": 6.023680925369263
+   }
+  }
+ }
+}

@@ -1,0 +1,17 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below. Please also cite Google's EmbeddingGemma 2 as described in its official model card."
+type: software
+title: "Embed2ASR: Can an Embedding Model Become a Speech Recognition Model?"
+abstract: "Repurposing Google's EmbeddingGemma 2 audio representations for speech recognition with a frozen encoder and a lightweight GRU-CTC reader."
+authors:
+  - alias: tc3oliver
+version: 0.1.0
+repository-code: "https://github.com/tc3oliver/embed2asr"
+url: "https://github.com/tc3oliver/embed2asr"
+license: Apache-2.0
+keywords:
+  - speech recognition
+  - CTC
+  - EmbeddingGemma 2
+  - code-switching
+  - Taiwanese Mandarin

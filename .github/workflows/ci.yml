@@ -1,0 +1,61 @@
+name: ci
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python: ["3.10", "3.12"]
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: ${{ matrix.python }}
+      - name: install (CPU torch, no weights, no HF token)
+        run: |
+          sudo apt-get update && sudo apt-get install -y --no-install-recommends ffmpeg libsndfile1
+          python -m pip install --upgrade pip
+          python -m pip install torch --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install -e ".[dev,eval,train]"
+      - name: ruff
+        run: |
+          ruff check .
+          ruff format --check .
+      - name: pytest (default markers; slow tests need the real encoder)
+        run: pytest -q
+      - name: training smoke (synthetic features, CPU; no checkpoint, GPU or token)
+        run: |
+          python -m training.smoke_data
+          python -m training.train --config configs/smoke.yaml --device cpu
+      - name: build + twine check
+        run: |
+          python -m build
+          twine check dist/*
+      - name: clean-venv install smoke (wheel and sdist)
+        run: |
+          for art in dist/*.whl dist/*.tar.gz; do
+            rm -rf /tmp/smoke && python -m venv /tmp/smoke
+            /tmp/smoke/bin/python -m pip install -q --upgrade pip
+            /tmp/smoke/bin/python -m pip install -q torch --index-url https://download.pytorch.org/whl/cpu
+            /tmp/smoke/bin/python -m pip install -q "$art"
+            (cd /tmp && /tmp/smoke/bin/embed2asr --help && /tmp/smoke/bin/python -c "import embed2asr.metrics, embed2asr.pipeline, embed2asr.cli")
+          done
+
+  secrets:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - name: gitleaks
+        run: |
+          curl -sSfL https://github.com/gitleaks/gitleaks/releases/download/v8.30.1/gitleaks_8.30.1_linux_x64.tar.gz | tar xz gitleaks
+          ./gitleaks git --redact --verbose --exit-code 1 .

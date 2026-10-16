@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="544" viewBox="0 0 760 544" font-family="Helvetica,Arial,sans-serif" font-size="12">
+<rect width="760" height="544" fill="#ffffff"/>
+<text x="12" y="22" font-size="15" font-weight="bold" fill="#202124">Error rate on held-out test sets (%, lower is better)</text>
+<rect x="12" y="34" width="10" height="10" fill="#2a6fdb"/><text x="27" y="43" fill="#202124">Embed2ASR greedy</text>
+<rect x="162" y="34" width="10" height="10" fill="#1baa8b"/><text x="177" y="43" fill="#202124">Embed2ASR + LM</text>
+<rect x="312" y="34" width="10" height="10" fill="#9aa0a6"/><text x="327" y="43" fill="#202124">Whisper large-v3</text>
+<text x="242" y="74.5" text-anchor="end" fill="#202124">Common Voice zh-TW 27.0 test (CER)</text>
+<rect x="250" y="54" width="227.1" height="10" fill="#2a6fdb"/><text x="481.1" y="63" font-size="10" fill="#3c4043">15.6</text>
+<rect x="250" y="65" width="214.0" height="10" fill="#1baa8b"/><text x="468.0" y="74" font-size="10" fill="#3c4043">14.7</text>
+<rect x="250" y="76" width="139.6" height="10" fill="#9aa0a6"/><text x="393.6" y="85" font-size="10" fill="#3c4043">9.6</text>
+<text x="242" y="121.5" text-anchor="end" fill="#202124">Parliament test (set A) (CER)</text>
+<rect x="250" y="101" width="278.7" height="10" fill="#2a6fdb"/><text x="532.7" y="110" font-size="10" fill="#3c4043">19.2</text>
+<rect x="250" y="112" width="276.3" height="10" fill="#1baa8b"/><text x="530.3" y="121" font-size="10" fill="#3c4043">19.0</text>
+<rect x="250" y="123" width="330.4" height="10" fill="#9aa0a6"/><text x="584.4" y="132" font-size="10" fill="#3c4043">22.7</text>
+<text x="242" y="168.5" text-anchor="end" fill="#202124">Parliament test (set B) (CER)</text>
+<rect x="250" y="148" width="280.7" height="10" fill="#2a6fdb"/><text x="534.7" y="157" font-size="10" fill="#3c4043">19.3</text>
+<rect x="250" y="159" width="279.4" height="10" fill="#1baa8b"/><text x="533.4" y="168" font-size="10" fill="#3c4043">19.2</text>
+<rect x="250" y="170" width="346.2" height="10" fill="#9aa0a6"/><text x="600.2" y="179" font-size="10" fill="#3c4043">23.8</text>
+<text x="242" y="215.5" text-anchor="end" fill="#202124">ASCEND test (MER)</text>
+<rect x="250" y="195" width="347.4" height="10" fill="#2a6fdb"/><text x="601.4" y="204" font-size="10" fill="#3c4043">23.9</text>
+<rect x="250" y="206" width="333.3" height="10" fill="#1baa8b"/><text x="587.3" y="215" font-size="10" fill="#3c4043">22.9</text>
+<rect x="250" y="217" width="403.5" height="10" fill="#9aa0a6"/><text x="657.5" y="226" font-size="10" fill="#3c4043">27.8</text>
+<text x="242" y="262.5" text-anchor="end" fill="#202124">ML2021_ASR_ST test (MER)</text>
+<rect x="250" y="242" width="428.6" height="10" fill="#2a6fdb"/><text x="682.6" y="251" font-size="10" fill="#3c4043">29.5</text>
+<rect x="250" y="253" width="420.5" height="10" fill="#1baa8b"/><text x="674.5" y="262" font-size="10" fill="#3c4043">28.9</text>
+<rect x="250" y="264" width="233.2" height="10" fill="#9aa0a6"/><text x="487.2" y="273" font-size="10" fill="#3c4043">16.0</text>
+<text x="242" y="309.5" text-anchor="end" fill="#202124">FLEURS en-US test (WER)</text>
+<rect x="250" y="289" width="356.4" height="10" fill="#2a6fdb"/><text x="610.4" y="298" font-size="10" fill="#3c4043">24.5</text>
+<rect x="250" y="311" width="65.3" height="10" fill="#9aa0a6"/><text x="319.3" y="320" font-size="10" fill="#3c4043">4.5</text>
+<text x="242" y="356.5" text-anchor="end" fill="#202124">LibriSpeech test-clean (WER)</text>
+<rect x="250" y="336" width="130.6" height="10" fill="#2a6fdb"/><text x="384.6" y="345" font-size="10" fill="#3c4043">9.0</text>
+<rect x="250" y="358" width="58.2" height="10" fill="#9aa0a6"/><text x="312.2" y="367" font-size="10" fill="#3c4043">4.0</text>
+<text x="242" y="403.5" text-anchor="end" fill="#202124">LibriSpeech test-other (WER)</text>
+<rect x="250" y="383" width="286.7" height="10" fill="#2a6fdb"/><text x="540.7" y="392" font-size="10" fill="#3c4043">19.7</text>
+<rect x="250" y="405" width="82.5" height="10" fill="#9aa0a6"/><text x="336.5" y="414" font-size="10" fill="#3c4043">5.7</text>
+<text x="242" y="450.5" text-anchor="end" fill="#202124">VoxPopuli en test (WER)</text>
+<rect x="250" y="430" width="222.6" height="10" fill="#2a6fdb"/><text x="476.6" y="439" font-size="10" fill="#3c4043">15.3</text>
+<rect x="250" y="452" width="160.0" height="10" fill="#9aa0a6"/><text x="414.0" y="461" font-size="10" fill="#3c4043">11.0</text>
+<text x="242" y="497.5" text-anchor="end" fill="#202124">AMI IHM test (WER)</text>
+<rect x="250" y="477" width="343.0" height="10" fill="#2a6fdb"/><text x="597.0" y="486" font-size="10" fill="#3c4043">23.6</text>
+<rect x="250" y="499" width="273.9" height="10" fill="#9aa0a6"/><text x="527.9" y="508" font-size="10" fill="#3c4043">18.8</text>
+<line x1="250" y1="50" x2="250" y2="528" stroke="#80868b"/></svg>

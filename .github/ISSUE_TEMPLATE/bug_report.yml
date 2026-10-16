@@ -1,0 +1,48 @@
+name: Bug report
+description: Something does not work as documented.
+labels: [bug]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened
+      description: What did you expect, and what happened instead?
+    validations:
+      required: true
+  - type: textarea
+    id: command
+    attributes:
+      label: Command or code to reproduce
+      render: shell
+    validations:
+      required: true
+  - type: textarea
+    id: error
+    attributes:
+      label: Full error output
+      render: text
+  - type: input
+    id: version
+    attributes:
+      label: Embed2ASR version or commit
+    validations:
+      required: true
+  - type: textarea
+    id: env
+    attributes:
+      label: Environment
+      description: OS, Python, PyTorch, GPU and ROCm/CUDA version.
+      placeholder: |
+        OS: Ubuntu 24.04
+        Python: 3.12
+        PyTorch: 2.x (ROCm 7.1 / CUDA 12.x)
+        GPU: ...
+    validations:
+      required: true
+  - type: checkboxes
+    id: data
+    attributes:
+      label: Data
+      options:
+        - label: I did not attach audio, transcripts or checkpoints that I am not allowed to share.
+          required: true

@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="616" viewBox="0 0 640 616" role="img" aria-labelledby="t d">
+  <title id="t">Embed2ASR-v1 vs Whisper large-v3: speed and memory</title>
+  <desc id="d">Batch 1 RTF 0.0138 vs 0.0576 (4.16x faster). Batch 16 RTF 0.00345 vs 0.0106 (3.06x faster). Peak GPU memory 0.75 vs 3.20 GiB at batch 1 and 1.74 vs 6.88 GiB at batch 16. Cold start 7.9 s vs 6.0 s. Lower is better.</desc>
+  <style>
+    text { font-family: -apple-system, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif; }
+    .card { fill: #ffffff; stroke: #d0d7de; }
+    .t { fill: #1f2328; }
+    .s { fill: #57606a; }
+    .bo { fill: #1a7f37; }
+    .bw { fill: #8c959f; }
+    .win { fill: #1a7f37; }
+    @media (prefers-color-scheme: dark) {
+      .card { fill: #0d1117; stroke: #30363d; }
+      .t { fill: #e6edf3; }
+      .s { fill: #9da7b3; }
+      .bo { fill: #3fb950; }
+      .bw { fill: #6e7681; }
+      .win { fill: #3fb950; }
+    }
+  </style>
+  <rect x="1" y="1" width="638" height="614" rx="16" class="card" stroke-width="2"/>
+  <text x="24" y="36" text-anchor="start" font-size="20" font-weight="700" class="t">Embed2ASR-v1 vs Whisper large-v3: speed and memory</text>
+  <text x="24" y="58" text-anchor="start" font-size="15" class="s">200 clips, 1,086 s of audio, bf16, 1x MI300X. Lower is better.</text>
+  <text x="24" y="90" text-anchor="start" font-size="17" font-weight="600" class="t">Batch 1: real-time factor (RTF)</text>
+  <text x="616" y="90" text-anchor="end" font-size="17" font-weight="700" class="win">4.16x faster</text>
+  <text x="24" y="124" text-anchor="start" font-size="16" class="t">Embed2ASR</text>
+  <rect x="120" y="106" width="96.1" height="28" rx="4" class="bo"/>
+  <text x="226.10114718770535" y="126" text-anchor="start" font-size="16" font-weight="600" class="t">0.0138</text>
+  <text x="24" y="164" text-anchor="start" font-size="16" class="t">Whisper</text>
+  <rect x="120" y="146" width="400.0" height="28" rx="4" class="bw"/>
+  <text x="530.0" y="166" text-anchor="start" font-size="16" font-weight="600" class="t">0.0576</text>
+  <text x="24" y="214" text-anchor="start" font-size="17" font-weight="600" class="t">Batch 16: real-time factor (RTF)</text>
+  <text x="616" y="214" text-anchor="end" font-size="17" font-weight="700" class="win">3.06x faster</text>
+  <text x="24" y="248" text-anchor="start" font-size="16" class="t">Embed2ASR</text>
+  <rect x="120" y="230" width="130.8" height="28" rx="4" class="bo"/>
+  <text x="260.8386824873459" y="250" text-anchor="start" font-size="16" font-weight="600" class="t">0.00345</text>
+  <text x="24" y="288" text-anchor="start" font-size="16" class="t">Whisper</text>
+  <rect x="120" y="270" width="400.0" height="28" rx="4" class="bw"/>
+  <text x="530.0" y="290" text-anchor="start" font-size="16" font-weight="600" class="t">0.0106</text>
+  <text x="24" y="338" text-anchor="start" font-size="17" font-weight="600" class="t">Peak GPU memory (GiB, torch max allocated)</text>
+  <text x="24" y="368" text-anchor="start" font-size="16" font-weight="600" class="s">Batch 1</text>
+  <text x="616" y="368" text-anchor="end" font-size="17" font-weight="700" class="win">-76.5%</text>
+  <text x="24" y="396" text-anchor="start" font-size="16" class="t">Embed2ASR</text>
+  <rect x="120" y="378" width="43.6" height="28" rx="4" class="bo"/>
+  <text x="173.6415986505073" y="398" text-anchor="start" font-size="16" font-weight="600" class="t">0.75</text>
+  <text x="24" y="436" text-anchor="start" font-size="16" class="t">Whisper</text>
+  <rect x="120" y="418" width="185.9" height="28" rx="4" class="bw"/>
+  <text x="315.9226108005289" y="438" text-anchor="start" font-size="16" font-weight="600" class="t">3.20</text>
+  <text x="24" y="480" text-anchor="start" font-size="16" font-weight="600" class="s">Batch 16</text>
+  <text x="616" y="480" text-anchor="end" font-size="17" font-weight="700" class="win">-74.7%</text>
+  <text x="24" y="508" text-anchor="start" font-size="16" class="t">Embed2ASR</text>
+  <rect x="120" y="490" width="101.4" height="28" rx="4" class="bo"/>
+  <text x="231.39829568616477" y="510" text-anchor="start" font-size="16" font-weight="600" class="t">1.74</text>
+  <text x="24" y="548" text-anchor="start" font-size="16" class="t">Whisper</text>
+  <rect x="120" y="530" width="400.0" height="28" rx="4" class="bw"/>
+  <text x="530.0" y="550" text-anchor="start" font-size="16" font-weight="600" class="t">6.88</text>
+  <text x="24" y="602" text-anchor="start" font-size="15" class="s">Cold start (median of 3): Embed2ASR 7.9 s, Whisper 6.0 s (Whisper is faster).</text>
+</svg>

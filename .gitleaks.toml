@@ -1,0 +1,6 @@
+[extend]
+useDefault = true
+
+[[allowlists]]
+description = "SHA-256 digests of release files in the benchmark record"
+paths = ['''benchmarks/v0\.1\.0\.json''']

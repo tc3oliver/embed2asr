@@ -1,0 +1,53 @@
+name: Reproduction report
+description: You re-ran data preparation, training or evaluation; report what you got.
+labels: [reproduction]
+body:
+  - type: dropdown
+    id: stage
+    attributes:
+      label: Stage
+      options:
+        - data preparation
+        - feature caching
+        - training
+        - evaluation
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Embed2ASR version or commit
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Exact steps and config
+      render: shell
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Reference result
+      description: Which documented result you compared against (file and section, checkpoint and epoch).
+    validations:
+      required: true
+  - type: textarea
+    id: observed
+    attributes:
+      label: Your result
+      description: Numbers with metric (CER / WER / MER), split (dev / test) and decoding mode (greedy / LM).
+    validations:
+      required: true
+  - type: textarea
+    id: env
+    attributes:
+      label: Environment and hardware
+    validations:
+      required: true
+  - type: textarea
+    id: data
+    attributes:
+      label: Dataset versions
+      description: Corpus release or revision and checksums, if you have them.

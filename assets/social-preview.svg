@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="640" viewBox="0 0 1280 640" role="img" aria-labelledby="t d">
+  <title id="t">Embed2ASR: embedding model to speech recognition</title>
+  <desc id="d">A frozen EmbeddingGemma 2 audio encoder feeds a trainable 9.66M-parameter GRU-CTC reader that outputs a transcript.</desc>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#9da7b3"/></marker>
+  </defs>
+  <style>text { font-family: -apple-system, "Segoe UI", "Noto Sans", "DejaVu Sans", Helvetica, Arial, sans-serif; }</style>
+  <rect width="1280" height="640" fill="#0d1117"/>
+  <rect x="0" y="0" width="12" height="640" fill="#3fb950"/>
+  <text x="80" y="170" font-size="96" font-weight="700" fill="#e6edf3">Embed2ASR</text>
+  <text x="80" y="236" font-size="40" fill="#9da7b3">Embedding model to speech recognition</text>
+
+  <rect x="80" y="320" width="300" height="150" rx="16" fill="#0c2d6b" stroke="#58a6ff" stroke-width="3"/>
+  <text x="230" y="378" text-anchor="middle" font-size="26" font-weight="600" fill="#e6edf3">EmbeddingGemma 2</text>
+  <text x="230" y="414" text-anchor="middle" font-size="22" fill="#9da7b3">audio encoder</text>
+  <rect x="170" y="430" width="120" height="28" rx="14" fill="#58a6ff"/>
+  <text x="230" y="451" text-anchor="middle" font-size="17" font-weight="700" fill="#0d1117">FROZEN</text>
+  <line x1="380" y1="395" x2="470" y2="395" stroke="#9da7b3" stroke-width="3" marker-end="url(#a)"/>
+  <text x="425" y="372" text-anchor="middle" font-size="18" fill="#f778ba">1536-d</text>
+  <text x="425" y="428" text-anchor="middle" font-size="18" fill="#f778ba">25 fps</text>
+
+  <rect x="470" y="320" width="300" height="150" rx="16" fill="#0f2d1a" stroke="#3fb950" stroke-width="3"/>
+  <text x="620" y="378" text-anchor="middle" font-size="28" font-weight="600" fill="#e6edf3">GRU-CTC reader</text>
+  <text x="620" y="414" text-anchor="middle" font-size="22" fill="#9da7b3">9.66M params</text>
+  <rect x="550" y="430" width="140" height="28" rx="14" fill="#3fb950"/>
+  <text x="620" y="451" text-anchor="middle" font-size="17" font-weight="700" fill="#0d1117">TRAINABLE</text>
+  <line x1="770" y1="395" x2="860" y2="395" stroke="#9da7b3" stroke-width="3" marker-end="url(#a)"/>
+
+  <rect x="860" y="320" width="340" height="150" rx="16" fill="#161b22" stroke="#8b949e" stroke-width="3"/>
+  <text x="1030" y="378" text-anchor="middle" font-size="28" font-weight="600" fill="#e6edf3">Transcript</text>
+  <text x="1030" y="414" text-anchor="middle" font-size="22" fill="#9da7b3">zh-TW · English · mixed</text>
+
+  <text x="80" y="570" font-size="26" fill="#9da7b3">Frozen encoder, small CTC reader. Mandarin, English, code-switching.</text>
+</svg>

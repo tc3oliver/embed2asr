@@ -1,0 +1,52 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "embed2asr"
+dynamic = ["version"]
+description = "Speech recognition from frozen EmbeddingGemma 2 audio features + a small GRU-CTC reader"
+requires-python = ">=3.10"
+license = "Apache-2.0"
+authors = [{ name = "tc3oliver" }]
+dependencies = [
+    "numpy",
+    # any torch build (CUDA / ROCm / CPU); install the right wheel for your accelerator first
+    "torch>=2.1",
+    # 5.19.0 is the first release that ships transformers.models.embedding_gemma2 (5.17/5.18 do not)
+    "transformers>=5.19",
+    "sentencepiece",
+    "soundfile",
+    "scipy",
+    "safetensors",
+    "huggingface_hub",
+]
+
+[project.optional-dependencies]
+lm = []
+eval = ["num2words==0.5.14"]
+train = ["pyyaml"]
+dev = ["pytest", "ruff", "build", "twine"]
+
+[project.scripts]
+embed2asr = "embed2asr.cli:main"
+
+[tool.setuptools.dynamic]
+version = { attr = "embed2asr.__version__" }
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]  # tests import the training/ scripts
+addopts = "-m 'not slow'"
+markers = ["slow: needs the real EmbeddingGemma 2 encoder (download) and/or a GPU"]
+
+[tool.ruff]
+line-length = 140
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP"]
+ignore = ["E501"]  # formatter owns code width; long docstrings/comments are fine

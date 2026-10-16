@@ -1,0 +1,25 @@
+# Smoke run on synthetic features: checks the training code end to end (no audio, no encoder, no GPU needed).
+#   python -m training.smoke_data                       # writes runs/smoke/{train,pool,dev}
+#   python -m training.train --config configs/smoke.yaml [--device cpu]
+# On a real cache from training/prepare_features.py:  --train CACHE/index.jsonl --dev DEV/index.jsonl --pool
+# Warm start from a v1 checkpoint needs the v1 shape: --init reader.pt --vocab-mode bpe --d 512 --gru 256 --blocks 3
+train: [runs/smoke/train/index.jsonl]
+train_hours: 0.005
+pool:
+  - {path: runs/smoke/pool/index.jsonl, hours: 0.003}
+pool_chunks: 2
+dev: [runs/smoke/dev/index.jsonl]
+dev_extra:
+  x: runs/smoke/dev/index.jsonl
+select: {dev_cer: 0.9, dev_x_mixmer: 0.9}
+vocab_mode: char
+d: 32
+gru: 16
+blocks: 1
+batch_size: 4
+lr: 3.0e-3
+epochs: 3
+eval_every: 1
+round_to: 8
+out: runs/smoke/ckpt
+resume: auto

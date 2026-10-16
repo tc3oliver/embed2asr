@@ -1,0 +1,62 @@
+name: Benchmark report
+description: Report an accuracy or speed measurement.
+labels: [benchmark]
+body:
+  - type: input
+    id: dataset
+    attributes:
+      label: Dataset and split
+      placeholder: e.g. FLEURS en_us test
+    validations:
+      required: true
+  - type: dropdown
+    id: metric
+    attributes:
+      label: Metric
+      description: Report each metric separately; do not average CER, WER and MER.
+      options:
+        - CER
+        - WER
+        - MER
+        - RTF / latency / memory
+    validations:
+      required: true
+  - type: dropdown
+    id: decoding
+    attributes:
+      label: Decoding
+      options:
+        - greedy
+        - LM (zh 5-gram)
+        - other (describe below)
+    validations:
+      required: true
+  - type: input
+    id: value
+    attributes:
+      label: Result
+      description: Lower is better for error rates and RTF.
+    validations:
+      required: true
+  - type: input
+    id: checkpoint
+    attributes:
+      label: Checkpoint and Embed2ASR version
+    validations:
+      required: true
+  - type: textarea
+    id: hardware
+    attributes:
+      label: Hardware and setup
+      description: GPU/CPU, precision, batch size, whether the device was shared, and what was timed (end-to-end or reader only).
+    validations:
+      required: true
+  - type: textarea
+    id: normalisation
+    attributes:
+      label: Text normalisation
+      description: Which normaliser was applied to references and hypotheses.
+  - type: textarea
+    id: notes
+    attributes:
+      label: Notes

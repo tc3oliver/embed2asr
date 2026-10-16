@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="440" viewBox="0 0 880 440" role="img" aria-labelledby="t d">
+  <title id="t">Embed2ASR overview</title>
+  <desc id="d">16 kHz audio goes into the frozen EmbeddingGemma 2 audio encoder (304,824,608 parameters). Embed2ASR taps last_hidden_state, a sequence of 1536-dimensional frames at 25 frames per second, before embed_audio and pooling. A trainable GRU-CTC reader (9,655,172 parameters) turns the frames into a transcript. The original embed_audio and pooling path is drawn dashed and grey and is not used. About 314.5M parameters are loaded for inference.</desc>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" class="ar"/></marker>
+    <marker id="ag" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" class="arg"/></marker>
+  </defs>
+  <style>
+    text { font-family: -apple-system, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif; }
+    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    .card { fill: #ffffff; stroke: #d0d7de; }
+    .box { fill: #f6f8fa; stroke: #57606a; }
+    .enc { fill: #ddf4ff; stroke: #0969da; }
+    .trn { fill: #dafbe1; stroke: #1a7f37; }
+    .off { fill: #f6f8fa; stroke: #8c959f; stroke-dasharray: 6 5; }
+    .panel { fill: #ffffff; stroke: #1a7f37; }
+    .t { fill: #1f2328; }
+    .s { fill: #57606a; }
+    .g { fill: #6e7781; }
+    .tapt { fill: #bf3989; }
+    .tapc { fill: #ffffff; stroke: #bf3989; }
+    .tapl { stroke: #bf3989; }
+    .pb { fill: #0969da; }
+    .pg { fill: #1a7f37; }
+    .pt { fill: #ffffff; }
+    .lock { stroke: #0969da; fill: none; }
+    .lockb { fill: #0969da; }
+    .ln { stroke: #57606a; }
+    .lng { stroke: #8c959f; }
+    .lnr { stroke: #1a7f37; }
+    .ar { fill: #57606a; }
+    .arg { fill: #8c959f; }
+    @media (prefers-color-scheme: dark) {
+      .card { fill: #0d1117; stroke: #30363d; }
+      .box { fill: #161b22; stroke: #8b949e; }
+      .enc { fill: #0c2d6b; stroke: #58a6ff; }
+      .trn { fill: #0f2d1a; stroke: #3fb950; }
+      .off { fill: #161b22; stroke: #6e7681; }
+      .panel { fill: #0d1117; stroke: #3fb950; }
+      .t { fill: #e6edf3; }
+      .s { fill: #9da7b3; }
+      .g { fill: #8b949e; }
+      .tapt { fill: #f778ba; }
+      .tapc { fill: #0d1117; stroke: #f778ba; }
+      .tapl { stroke: #f778ba; }
+      .pb { fill: #58a6ff; }
+      .pg { fill: #3fb950; }
+      .pt { fill: #0d1117; }
+      .lock { stroke: #58a6ff; }
+      .lockb { fill: #58a6ff; }
+      .ln { stroke: #9da7b3; }
+      .lng { stroke: #6e7681; }
+      .lnr { stroke: #3fb950; }
+      .ar { fill: #9da7b3; }
+      .arg { fill: #6e7681; }
+    }
+  </style>
+  <rect x="1" y="1" width="878" height="438" rx="16" class="card" stroke-width="2"/>
+  <text x="24" y="36" text-anchor="start" font-size="20" font-weight="700" class="t">Frozen embedding encoder + small CTC reader</text>
+  <rect x="24" y="60" width="100" height="110" rx="12" class="box" stroke-width="2"/>
+  <text x="74" y="108" text-anchor="middle" font-size="18" font-weight="600" class="t">Audio</text>
+  <text x="74" y="132" text-anchor="middle" font-size="15" class="s">16 kHz</text>
+  <line x1="124" y1="115" x2="152" y2="115" class="ln" stroke-width="2.5" marker-end="url(#a)"/>
+  <rect x="154" y="60" width="250" height="110" rx="12" class="enc" stroke-width="2.5"/>
+  <text x="279" y="90" text-anchor="middle" font-size="18" font-weight="600" class="t">EmbeddingGemma 2</text>
+  <text x="279" y="112" text-anchor="middle" font-size="14" class="s">audio encoder, by Google</text>
+  <text x="279" y="132" text-anchor="middle" font-size="14" class="s">304,824,608 params</text>
+  <rect x="168" y="143" width="84" height="20" rx="10" class="pb"/>
+  <text x="210" y="158" text-anchor="middle" font-size="12" font-weight="700" class="pt" letter-spacing="0.5">FROZEN</text>
+  <g transform="translate(364,141)"><path d="M4,10 V7 a6,6 0 0 1 12,0 V10" class="lock" stroke-width="2.5"/><rect x="0" y="10" width="20" height="15" rx="3" class="lockb"/></g>
+  <line x1="404" y1="115" x2="434" y2="115" class="ln" stroke-width="2.5" marker-end="url(#a)"/>
+  <circle cx="419" cy="115" r="7" class="tapc" stroke-width="3"/>
+  <line x1="419" y1="124" x2="419" y2="276" class="tapl" stroke-width="2" stroke-dasharray="4 4"/>
+  <text x="405" y="232" text-anchor="end" font-size="14" font-weight="600" class="tapt">tap: last_hidden_state</text>
+  <text x="405" y="252" text-anchor="end" font-size="14" class="tapt">[T × 1536], 25 frames/s</text>
+  <text x="405" y="272" text-anchor="end" font-size="14" class="tapt">before embed_audio and pooling</text>
+  <rect x="436" y="60" width="250" height="110" rx="12" class="trn" stroke-width="2.5"/>
+  <text x="561" y="90" text-anchor="middle" font-size="18" font-weight="600" class="t">GRU-CTC reader</text>
+  <text x="561" y="112" text-anchor="middle" font-size="14" class="s">Conv1d + BiGRU</text>
+  <text x="561" y="132" text-anchor="middle" font-size="14" class="s">9,655,172 params</text>
+  <rect x="450" y="143" width="104" height="20" rx="10" class="pg"/>
+  <text x="502" y="158" text-anchor="middle" font-size="12" font-weight="700" class="pt" letter-spacing="0.5">TRAINABLE</text>
+  <line x1="686" y1="115" x2="716" y2="115" class="ln" stroke-width="2.5" marker-end="url(#a)"/>
+  <rect x="718" y="60" width="138" height="110" rx="12" class="box" stroke-width="2"/>
+  <text x="787" y="102" text-anchor="middle" font-size="18" font-weight="600" class="t">Transcript</text>
+  <text x="787" y="126" text-anchor="middle" font-size="14" class="s">zh-TW, en,</text>
+  <text x="787" y="144" text-anchor="middle" font-size="14" class="s">mixed</text>
+  <line x1="190" y1="170" x2="190" y2="294" class="lng" stroke-width="2" stroke-dasharray="6 5" marker-end="url(#ag)"/>
+  <rect x="154" y="296" width="250" height="60" rx="12" class="off" stroke-width="2"/>
+  <text x="279" y="322" text-anchor="middle" font-size="16" font-weight="600" class="g">embed_audio + pooling</text>
+  <text x="279" y="342" text-anchor="middle" font-size="14" class="g">one vector per clip, not used</text>
+  <g transform="translate(24,378)">
+  <rect x="0" y="0" width="22" height="16" rx="4" class="enc" stroke-width="2"/>
+  <text x="30" y="13" text-anchor="start" font-size="14" class="t">frozen (Google)</text>
+  <rect x="190" y="0" width="22" height="16" rx="4" class="trn" stroke-width="2"/>
+  <text x="220" y="13" text-anchor="start" font-size="14" class="t">trainable (this project)</text>
+  <rect x="420" y="0" width="22" height="16" rx="4" class="off" stroke-width="2"/>
+  <text x="450" y="13" text-anchor="start" font-size="14" class="t">original path, unused</text>
+  </g>
+  <text x="24" y="418" text-anchor="start" font-size="15" class="s">Loaded for inference: ~314.5M params (304,824,608 frozen + 9,655,172 trainable)</text>
+</svg>
